@@ -26,24 +26,57 @@ def GetLines(dirs):
             coords.append([last[0], last[1]-dir[1]])
     return coords
 
+def Union(lst1, lst2): 
+    lst3 = [value for value in lst1 if value in lst2] 
+    return lst3 
+
+def CommonRange(n1,n2,n3,n4):
+    nr1 = range(1,2)
+    nr2 = range(1,2)
+    if n1 < n2:
+        nr1 = range(n1,n2+1)
+    else:
+        nr1 = range(n2,n1+1)
+    if n3 < n4:
+        nr2 = range(n3,n4+1)
+    else:
+        nr2 = range(n4,n3+1)
+    return Union(nr1,nr2)
+
+
+
 def FindIntersections(one, two):
+    intersections = []
     for i1 in range(1,len(one)):
         for i2 in range(1,len(two)):
-            l1p1 = one[i1-1]
-            l1p2 = one[i1]
+            x1 = one[i1-1][0]
+            y1 = one[i1-1][1]
+            x2 = one[i1][0]
+            y2 = one[i1][1]
             
-            l2p1 = one[i2-1]
-            l2p2 = one[i2]
+            x3 = two[i2-1][0]
+            y3 = two[i2-1][1]
+            x4 = two[i2][0]
+            y4 = two[i2][1]
 
-            if l1p1[0] == l1p2[0] and l2p1[0] == l2p2[0]: # both vertical
-                print("both vertical: ", l1p1,l1p2," | ",l2p1,l2p2)
-                if l1p1[0] == l2p1[0]:
-                    print("On top of one another")
+            if x1 == x2 and x3 == x4: # both vertical
+                if x1 == x3:
+                    for y in CommonRange(y1,y2,y3,y4):
+                        intersections.append(x1, y)
+                continue
 
-            if l1p1[1] == l1p2[1] and l2p1[1] == l2p2[1]: # both horizontal
-                print("both horizontal: ", l1p1,l1p2," | ",l2p1,l2p2)
-                if l1p1[1] == l2p1[1]:
-                    print("On top of one another")
+            if y1 == y2 and y3== y4: # both horizontal
+                if y1 == y3:
+                    for x in CommonRange(x1,x2,x3,x4):
+                        intersections.append(x, y1)
+                continue
+
+            #lines are not parallel or on top of each other
+
+
+
+
+
 input = LoadInput()
 
 dirs1 = input[0]
@@ -54,6 +87,7 @@ path2 = GetLines(dirs2)
 
 
 intersections = FindIntersections(path1, path2)
+
 
 
 print("computer says done")
