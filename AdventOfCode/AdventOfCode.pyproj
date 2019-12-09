@@ -29,7 +29,6 @@
     <Compile Include="DayOne.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dayFour.txt" />
     <Content Include="dayThree.txt" />
     <Content Include="dayTwo.txt" />
     <Content Include="dayOne.txt" />
