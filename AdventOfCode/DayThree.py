@@ -43,8 +43,6 @@ def CommonRange(n1,n2,n3,n4):
         nr2 = range(n4,n3+1)
     return Union(nr1,nr2)
 
-
-
 def FindIntersections(one, two):
     intersections = []
     for i1 in range(1,len(one)):
@@ -62,19 +60,37 @@ def FindIntersections(one, two):
             if x1 == x2 and x3 == x4: # both vertical
                 if x1 == x3:
                     for y in CommonRange(y1,y2,y3,y4):
-                        intersections.append(x1, y)
+                        intersections.append([x1, y])
                 continue
 
-            if y1 == y2 and y3== y4: # both horizontal
+            elif y1 == y2 and y3 == y4: # both horizontal
                 if y1 == y3:
                     for x in CommonRange(x1,x2,x3,x4):
-                        intersections.append(x, y1)
+                        intersections.append([x, y1])
                 continue
 
-            #lines are not parallel or on top of each other
+            if x1 == x2:
+                ys = [y1,y2]
+                ys.sort()
+                xs = [x3,x4]
+                xs.sort()
+                if y3 >= ys[0] and y3 <= ys[1] and x1 >= xs[0] and x1 <= xs[1]:
+                    intersections.append([x1, y3])
+            else:
+                ys = [y3,y4]
+                ys.sort()
+                xs = [x1,x2]
+                if y1 >= ys[0] and y1 <= ys[1] and x3 >= xs[0] and x3 <= xs[1]:
+                    intersections.append([x3, y1])
+    return intersections
 
+def Shortest(points):
 
-
+    lengths = []
+    for x in points:
+        lengths.append(abs(x[0]) + abs(x[1]))
+    lengths.sort()
+    return lengths[1]
 
 
 input = LoadInput()
@@ -85,9 +101,8 @@ dirs2 = input[1]
 path1 = GetLines(dirs1)
 path2 = GetLines(dirs2)
 
-
 intersections = FindIntersections(path1, path2)
+shortest = Shortest(intersections)
 
-
-
+print(shortest)
 print("computer says done")
