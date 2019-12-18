@@ -31,6 +31,7 @@ def AddMoons(listOfPlanets, planet, count):
             AddMoons(listOfPlanets, newPlanet, count)
 
 planets = loadInput()
+# Note: Find Planet which does no orbit any other planet
 head = Planet(planets[0].planet)
 head.moons.append(Planet(planets[0].moon))
 planets.remove(planets[0])
